@@ -3,9 +3,7 @@ layout: default
 version: 0.1.1
 ---
 
-# Lower Speck
-
-Version {{ page.version }}
+# Lower Speck {{ page.version }}
 
 Lower Speck is a method for creating a light-weight requirements specification document.
 
