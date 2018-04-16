@@ -1,0 +1,43 @@
+1. The specification MAY contain any number of blank lines.
+
+2. A non-blank line of the specification SHALL be considered a requirement.
+    2.a. Any line MAY have leading whitespace. Leading whitespace is not part of the requirement.
+
+3. A requirement MUST begin with an ID.
+    3.a. An ID MUST be a numeric segment followed by a series of alphabet segments.
+    3.b. Each ID segment MUST be followed by a single dot.
+    3.c. An ID MUST NOT contain whitespace.
+    3.d. An ID MUST have one or more segments.
+
+4. An ID MUST be followed by whitespace.
+
+5. Following the ID and the space, the requirement MAY include a flag section.
+    5.a. The flag section MUST start with a left parenthesis and end with a right parenthesis.
+    5.b. The flag section SHOULD contain tokens.
+    5.c. The flag section's tokens MUST be separated by commas.
+        5.c.a. The flag section's tokens MAY include X. An X indicates that the requirement is obsolete.
+        5.c.b. The flag section's tokens MAY include I. An I indicates that the specification is insufficient.
+        5.c.c. The flag section MAY include custom tokens.
+        5.c.d. Custom tokens MUST begin with a dash (-).
+
+6. If a flag section is present, it MUST be followed by whitespace.
+
+7. The text of the requirement is the final part. It MUST be text in plain language.
+    7.a. A requirement's text SHOULD use SHOULD, MUST, MAY, etc. as defined in RFC 2119.
+    7.b. A requirement's text MUST NOT include newlines.
+    7.c. All text SHOULD be in complete sentences with proper grammar.
+
+8. Specification requirements SHALL be well-ordered according to the following.
+    8.a. A requirement with only one segment in its ID SHALL be considered a top-level requirement.
+    8.b. A multi-segment ID SHALL identify a sub-requirement.
+    8.c. A sub-requirement MUST have an ID starting with the ID of its parent.
+    8.d. A requirement with no sub-requirements SHALL be considered a bottom-level requirement.
+    8.e. A sub-requirement MUST follow its parent requirement.
+    8.f. Requirements MUST be ordered numerically and alphabetically by their ID's.
+    8.g. Two requirements that have the same parent, or no parent, SHALL be considered siblings.
+    8.h. (X) The complete set of ordered siblings MUST have no ID gaps. I.e., the existence of "2.c." implies that "1.", "2.", "2.a.", and "2.b." MUST exist.
+    8.i. The first top-level requirement MUST have ID "1.".
+    8.j. The first of a set of sub-requirements MUST have "a." as the last segment of its ID.
+    8.k. Alphabetic segments MUST proceed by adding more characters when necessary. I.e., the sub-requirements following "z." are "aa.", "ab.", "ac.", and so on.
+    8.l. A complete set of ordered sub-requirement siblings MUST have no ID gaps. I.e., the existence of "2.c." implies that "2.", "2.a.", and "2.b." MUST exist.
+    8.m. Top-level siblings MAY have ID gaps.
