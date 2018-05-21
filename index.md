@@ -11,8 +11,6 @@ Keep reading to learn how to make a Lower Speck document and how to use it in a 
 
 ## The Lower Speck Process
 
-The following describes how Lower Speck can be used during development of software.
-
 1. Stakeholders MUST give developers a plain language specification.
 
 2. Developers MUST produce a Lower Speck document as shown in the next section. This MAY include flagging any requirements they believe are insufficient.
@@ -25,7 +23,7 @@ The following describes how Lower Speck can be used during development of softwa
 
 6. When changes are requested, the developers MUST insert new requirements and SHOULD flag existing requirements as obsolete where appropriate.
 
-7. As development proceeds, developers MUST include references to requirement ID's as explained below. 
+7. As development proceeds, developers MUST include references to requirement ID's in code.
 
 8. The Lower Speck document SHOULD be saved with the software code in a version control system.
 
@@ -42,7 +40,7 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
     2.a. Any line MAY have leading whitespace. Leading whitespace is not part of the requirement.
 
 3. A requirement MUST begin with an ID.
-    3.a. An ID MUST be a numeric segment followed by a series of alphabet segments.
+    3.a. An ID MUST be a numeric segment followed by a series of alphabetical segments.
     3.b. Each ID segment MUST be followed by a single dot.
     3.c. An ID MUST NOT contain whitespace.
     3.d. An ID MUST have one or more segments.
@@ -60,7 +58,7 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
 
 6. If a flag section is present, it MUST be followed by whitespace.
 
-7. The text of the requirement is the final part. It MUST be text in plain language.
+7. The final section MUST be the text of the requirement, in plain language.
     7.a. A requirement's text SHOULD use SHOULD, MUST, MAY, etc. as defined in RFC 2119.
     7.b. A requirement's text MUST NOT include newlines.
     7.c. All text SHOULD be in complete sentences with proper grammar.
@@ -74,18 +72,21 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
     8.f. Requirements MUST be ordered numerically and alphabetically by their ID's.
     8.g. Two requirements that have the same parent, or no parent, SHALL be considered siblings.
     8.h. (X) The complete set of ordered siblings MUST have no ID gaps. I.e., the existence of "2.c." implies that "1.", "2.", "2.a.", and "2.b." MUST exist.
-    8.i. The first top-level requirement MUST have ID "1.".
+    8.i. (X) The first top-level requirement MUST have ID "1.".
     8.j. The first of a set of sub-requirements MUST have "a." as the last segment of its ID.
     8.k. Alphabetic segments MUST proceed by adding more characters when necessary. I.e., the sub-requirements following "z." are "aa.", "ab.", "ac.", and so on.
     8.l. A complete set of ordered sub-requirement siblings MUST have no ID gaps. I.e., the existence of "2.c." implies that "2.", "2.a.", and "2.b." MUST exist.
     8.m. Top-level siblings MAY have ID gaps.
+        8.m.a. Top-level siblings MUST be ordered, even if they have ID gaps.
 ```
 
 ## Lower Speck References in Code
 
 For Lower Speck to be useful, requirement ID's MUST be referenced in code.
 
-A reference MUST be formatted as `LWR <ID>`, usually in a code comment. Automated tools SHOULD use text search to find references in this format. The full text of the requirement MAY also be included in the comment.
+A reference MUST be formatted as `LWR <ID>`, usually in a code comment. It MAY include the text of the requirement.
+
+Automated tools SHOULD use text search to find references in this format. The full text of the requirement MAY also be included in the comment.
 
 A code segment MAY have no reference to a requirement.
 
@@ -97,7 +98,30 @@ To fully address a specification, all bottom-level ID's MUST be referenced.
 
 In projects that use testing suites, references SHOULD be included with the tests and SHOULD NOT be included in operational code.
 
+Example:
+
+```php
+/**
+ * @LWR 3.c. The get method must return an empty string when no Customer is 
+ * present.
+ */
+function testGetReturnsEmptyString()
+{
+    ...
+}
+```
+
 In projects without testing suites, references SHOULD be included with the operational code.
+
+Example:
+
+```js
+// LWR 17.a. The bullet editor interface must be shown when a bullet point is
+// clicked.
+$('.bullet-point').on('click', (bulletPoint) => {
+    ...
+});
+```
 
 ## Making Changes to a Lower Speck Document
 
@@ -111,7 +135,7 @@ A requirement with no flag section MAY have one added.
 
 A flag section with no tokens is empty and MAY be removed.
 
-A requirement MAY be marked obsolete by adding an X token to its flag section.
+A requirement MAY be marked obsolete by adding an `X` token to its flag section.
 
 A requirement's text MAY be changed to another version if the meaning remains the same.
 
@@ -123,9 +147,9 @@ When a requirement becomes obsolete, any code referencing it SHOULD be reviewed.
 
 An obsoleted requirement SHOULD remain obsoleted. If the requirement needs to be reintroduced, a new requirement SHOULD be written.
 
-A requirement MAY be marked insufficient by adding an I token to its flag section. An insufficient requirement is one that is expected to have sub-requirements added later.
+A requirement MAY be marked insufficient by adding an `I` token to its flag section. An insufficient requirement is one that is expected to have sub-requirements added later.
 
-A requirement MAY be unmarked insufficient by removing the I token from its flag section.
+A requirement MAY be unmarked insufficient by removing the `I` token from its flag section.
 
 Blank lines MAY be removed or added.
 
