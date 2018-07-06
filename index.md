@@ -5,7 +5,7 @@ version: 0.2.0
 
 # Lower Speck {{ page.version }}
 
-By writing out requirements, we can ensure that a project's goals are explained to any level of detail both before code is written and later during maintenance.
+By writing out requirements, we can ensure that a project's goals are explained to any level of detail throughout the lifetime of the project.
 
 By including references to those requirements in our software, we can ensure that all the requirements are addressed.
 
@@ -107,7 +107,7 @@ A single requirement MAY be referenced multiple times. Some requirements need to
 
 To fully address a specification, all bottom-level ID's MUST be referenced. A reference to a bottom-level ID is sufficient to consider the top-level as partially addressed.
 
-In projects that use testing suites, references SHOULD be included with the tests and SHOULD NOT be included in operational code. Tests and requirements are closely-related concepts.
+In projects that use automated testing suites, references SHOULD be included with the tests and SHOULD NOT be included in operational code. Tests and requirements are closely-related concepts.
 
 Example with a PHPUnit test:
 
@@ -124,7 +124,7 @@ function testGetReturnsEmptyString()
 
 In projects without testing suites, references SHOULD be included with the operational code.
 
-Example:
+Example in JavaScript code with no automated tests:
 
 ```js
 // LWR 17.a. The bullet editor interface must be shown when a bullet point is
@@ -173,8 +173,6 @@ The primary purpose of Lower Speck is to establish a list of requirements and re
 This is achieved by giving each requirement a permanent ID. Therefore, it's important that no requirements be deleted from the list. Instead they are flagged obsolete.
 
 The rest of the specification mostly ensures that the list is well-defined so that it can be easily verified by both humans and software.
-
-<a href="but-why">Why Use A Requirements Document Like Lower Speck?</a>
 
 ## TO DO
 
