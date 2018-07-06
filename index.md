@@ -5,38 +5,44 @@ version: 0.2.0
 
 # Lower Speck {{ page.version }}
 
-Lower Speck is a method for creating a light-weight requirements specification document.
+By writing out requirements, we can ensure that a project's goals are explained to any level of detail both before code is written and later during maintenance.
 
-Keep reading to learn how to make a Lower Speck document and how to use it in a software product.
+By including references to those requirements in our software, we can ensure that all the requirements are addressed.
+
+By following a few simple rules, we can equip the computer verify that we've addressed all requirements.
+
+Lower Speck is a light-weight process for requirements management.
 
 ## The Lower Speck Process
 
-1. Stakeholders MUST give developers a plain language specification.
+1. Stakeholders give developers a plain language specification.
 
-2. Developers MUST produce a Lower Speck document as shown in the next section. This MAY include flagging any requirements they believe are insufficient.
+2. Developers produce a Lower Speck document as shown in the next section. This may include flagging any requirements they believe are insufficient.
 
-3. Developers MAY revise the stakeholders' original plain language document to include references to the Lower Speck document.
+3. Developers may revise the stakeholders' original plain language document to include references to the Lower Speck document.
 
-4. The stakeholders SHOULD review the Lower Speck document to discover any misunderstandings.
+4. The stakeholders should review the Lower Speck document to discover any misunderstandings.
 
-5. The stakeholders MAY choose this time or any other time to request changes.
+5. The stakeholders may choose this time or any other time to request changes.
 
-6. When changes are requested, the developers MUST insert new requirements and SHOULD flag existing requirements as obsolete where appropriate.
+6. When changes are requested, the developers insert new requirements and flag existing requirements as obsolete where appropriate.
 
-7. As development proceeds, developers MUST include references to requirement ID's in code.
+7. As development proceeds, developers include references to requirement ID's in code.
 
-8. The Lower Speck document SHOULD be saved with the software code in a version control system.
+8. Developers save the Lower Speck document with the software code in its version control system.
 
 ## The Lower Speck Format
 
-A Lower Speck document follows these formatting rules. These rules are written in the Lower Speck format.
+A Lower Speck document is made up of requirements.
+
+A Lower Speck document follows these formatting rules. These rules are written as an example of the Lower Speck format.
 
 The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
 
 ```
 1. The specification MAY contain any number of blank lines.
 
-2. A non-blank line of the specification SHALL be considered a requirement.
+2. A requirement MUST be a non-blank line of the specification.
     2.a. Any line MAY have leading whitespace. Leading whitespace is not part of the requirement.
 
 3. A requirement MUST begin with an ID.
@@ -55,6 +61,7 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
         5.c.b. The flag section's tokens MAY include I. An I indicates that the specification is insufficient.
         5.c.c. The flag section MAY include custom tokens.
         5.c.d. Custom tokens MUST begin with a dash (-).
+        5.c.e. Custom tokens MUST NOT contain a right parenthesis.
 
 6. If a flag section is present, it MUST be followed by whitespace.
 
@@ -63,9 +70,9 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
     7.b. A requirement's text MUST NOT include newlines.
     7.c. All text SHOULD be in complete sentences with proper grammar.
 
-8. Specification requirements SHALL be well-ordered according to the following.
-    8.a. A requirement with only one segment in its ID SHALL be considered a top-level requirement.
-    8.b. A multi-segment ID SHALL identify a sub-requirement.
+8. Specification requirements MUST be well-ordered according to the following.
+    8.a. A top-level requirement MUST have only one segment.
+    8.b. A sub-requirement MUST have a multi-segment ID.
     8.c. A sub-requirement MUST have an ID starting with the ID of its parent.
     8.d. A requirement with no sub-requirements SHALL be considered a bottom-level requirement.
     8.e. A sub-requirement MUST follow its parent requirement.
@@ -80,25 +87,29 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SH
         8.m.a. Top-level siblings MUST be ordered, even if they have ID gaps.
 ```
 
+Note that requirement 8.h. has been obsoleted and 8.m. has been added instead. Top-level requirements can have ID gaps now, but sub-requirements cannot have ID gaps.
+
+Note that requirement 8.i. has been obsoleted. The first top-level ID does not have to be 1.
+
 ## Lower Speck References in Code
 
 For Lower Speck to be useful, requirement ID's MUST be referenced in code.
 
-A reference MUST be formatted as `LWR <ID>`, usually in a code comment. It MAY include the text of the requirement.
+A reference MUST be formatted as `LWR <ID>`, usually in a code comment, where `<ID>` is replaced by the ID of a requirement. The comment MAY also include the text of the requirement.
 
 Automated tools SHOULD use text search to find references in this format. The full text of the requirement MAY also be included in the comment.
 
-A code segment MAY have no reference to a requirement.
+A code segment MAY have no reference to a requirement. Some code is not expressly required.
 
-A code segment MAY have multiple references.
+A code segment MAY have multiple references. Some code addressed multiple requirements.
 
-A single requirement MAY be referenced multiple times.
+A single requirement MAY be referenced multiple times. Some requirements need to be addressed by several different sections of code.
 
-To fully address a specification, all bottom-level ID's MUST be referenced.
+To fully address a specification, all bottom-level ID's MUST be referenced. A reference to a bottom-level ID is sufficient to consider the top-level as partially addressed.
 
-In projects that use testing suites, references SHOULD be included with the tests and SHOULD NOT be included in operational code.
+In projects that use testing suites, references SHOULD be included with the tests and SHOULD NOT be included in operational code. Tests and requirements are closely-related concepts.
 
-Example:
+Example with a PHPUnit test:
 
 ```php
 /**
@@ -127,6 +138,8 @@ $('.bullet-point').on('click', (bulletPoint) => {
 
 Developers SHOULD make changes to the Lower Speck document as needed.
 
+Once a requirement has been published in a Lower Speck document, the following rules MUST be followed.
+
 A requirement MUST NOT be removed when making changes.
 
 A requirement's ID MUST NOT change.
@@ -137,13 +150,13 @@ A flag section with no tokens is empty and MAY be removed.
 
 A requirement MAY be marked obsolete by adding an `X` token to its flag section.
 
-A requirement's text MAY be changed to another version if the meaning remains the same.
+A requirement's text MAY be rephrased if the meaning remains the same.
 
 A requirement's text MUST NOT change to reflect a different meaning.
 
 An obsoleted requirement MAY have additional text to explain its reason for obsolescence.
 
-When a requirement becomes obsolete, any code referencing it SHOULD be reviewed. References to obsoleted requirements MAY be removed.
+When a requirement becomes obsolete, any code referencing it SHOULD be reviewed. References to obsoleted requirements SHOULD be removed.
 
 An obsoleted requirement SHOULD remain obsoleted. If the requirement needs to be reintroduced, a new requirement SHOULD be written.
 
@@ -153,13 +166,13 @@ A requirement MAY be unmarked insufficient by removing the `I` token from its fl
 
 Blank lines MAY be removed or added.
 
-## Justification (or TL;DR)
+## Justification
 
 The primary purpose of Lower Speck is to establish a list of requirements and reference them from the software code.
 
 This is achieved by giving each requirement a permanent ID. Therefore, it's important that no requirements be deleted from the list. Instead they are flagged obsolete.
 
-The rest of the specification mostly ensures that the list is well defined so that it can be easily verified by both humans and software.
+The rest of the specification mostly ensures that the list is well-defined so that it can be easily verified by both humans and software.
 
 <a href="but-why">Why Use A Requirements Document Like Lower Speck?</a>
 
