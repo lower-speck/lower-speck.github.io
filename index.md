@@ -9,7 +9,7 @@ By writing out requirements, we can ensure that a project's goals are explained 
 
 By including references to those requirements in our software, we can ensure that all the requirements are addressed.
 
-By following a few simple rules, we can equip the computer verify that we've addressed all requirements.
+By following a few simple rules, we can equip the computer to verify that we've addressed all requirements.
 
 Lower Speck is a light-weight process for requirements management.
 
