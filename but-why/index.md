@@ -1,6 +1,6 @@
 ---
 layout: default
-version: 0.2.0
+draft: 1
 ---
 
 # The Need for a Requirements Document
